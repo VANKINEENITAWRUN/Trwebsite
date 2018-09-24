@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>Order Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+<body>
+
+<!--==========================
+   Header
+ ============================-->
+<header id="header">
+    <div class="container-fluid">
+
+        <div id="logo" class="pull-left">
+            <!-- <img src="img/trlogo.png" style="color: white;"> -->
+            <!-- <h1><a href="#intro" class="scrollto">BizPage</a></h1> -->
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a th:href="@{/home}">Home</a></li>
+                <li class="menu-active"><a href="#about">About Us</a></li>
+                <!-- <li><a href="#services">Services</a></li> -->
+                <!-- <li><a href="#portfolio">Portfolio</a></li> -->
+                <li class="menu-active"><a th:href="@{/postload}">PostLoad</a></li>
+                <!-- <li class="menu-has-children"><a href="">Drop Down</a> -->
+                <!-- <ul>
+                  <li><a href="#">Drop Down 1</a></li>
+                  <li><a href="#">Drop Down 3</a></li>
+                  <li><a href="#">Drop Down 4</a></li>
+                  <li><a href="#">Drop Down 5</a></li>
+                </ul>
+              </li> -->
+                <li class="menu-active" ><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<div>
+<form style="margin-left:10%" autocomplete="off" action="#" th:action="@{/postload}"
+      th:object="${order}" method="post" class="form-horizontal"
+      role="form">
+    <h2>Order Form</h2><br>
+    <div class="form-group col-md-4">
+        <label for="dateofs">Date of Shifting</label>
+        <input type="date" id="dateofs" th:field="*{dateofshifting}" placeholder="Date of Shifting" class="form-control"><label
+            th:if="${#fields.hasErrors('dateofshifting')}" th:errors="*{dateofshifting}"
+            class="validation-message"></label>    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="loading_city">Loading City</label>
+            <input type="text" id="loading_city" th:field="*{loading_city}" placeholder="Loading City" class="form-control">
+            <label
+                th:if="${#fields.hasErrors('loading_city')}" th:errors="*{loading_city}"
+
+                class="validation-message"></label>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="loading_location">Loading Location</label>
+            <input type="text" id="loading_location" th:field="*{loading_location}" placeholder="Loading Location" class="form-control"><label
+                th:if="${#fields.hasErrors('loading_location')}" th:errors="*{loading_location}"
+                class="validation-message"></label>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="loading_floorno">Loading Foor no</label>
+            <input type="number"id="loading_floorno" th:field="*{loading_floorno}" placeholder="Loading floor no" class="form-control"><label
+                th:if="${#fields.hasErrors('loading_floorno')}" th:errors="*{loading_floorno}"
+                class="validation-message"></label>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="unloading_city">unLoading City</label>
+            <input type="text" id="unloading_city" th:field="*{unloading_city}" placeholder="unLoading City" class="form-control"><label
+                th:if="${#fields.hasErrors('unloading_city')}" th:errors="*{unloading_city}"
+                class="validation-message"></label>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="unloading_location">unLoading Location</label>
+            <input type="text" id="unloading_location" th:field="*{unloading_location}" placeholder="unLoading Location" class="form-control"><label
+                th:if="${#fields.hasErrors('unloading_location')}" th:errors="*{unloading_location}"
+                class="validation-message"></label>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="loading_floorno">Loading Foor no</label>
+            <input type="number" id="unloading_floorno" th:field="*{unloading_floorno}" placeholder="unLoading floor no" class="form-control" ><label
+                th:if="${#fields.hasErrors('unloading_floorno')}" th:errors="*{unloading_floorno}"
+                class="validation-message"></label>
+        </div>
+    </div>
+    <h3>Services</h3>
+    <ul>
+        <li th:each="checkboxValue: ${services_list}">
+            <input type="checkbox"
+                   th:field="*{services}"
+                   th:value="${checkboxValue}" />
+            <label
+                    th:for="${#ids.prev('services')}"
+                    th:text="${checkboxValue}"></label>
+        </li>
+    </ul>
+    <h3>Shifting Items</h3>
+    <ul>
+        <li th:each="checkboxValue: ${items_list}">
+            <input type="checkbox"
+                   th:field="*{shifting_items}"
+                   th:value="${checkboxValue}" />
+            <label
+                    th:for="${#ids.prev('shifting_items')}"
+                    th:text="${checkboxValue}"></label>
+        </li>
+    </ul>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
+
+</form>
+</div>
+</body>
+</html>
