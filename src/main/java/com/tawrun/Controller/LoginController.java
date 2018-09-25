@@ -27,7 +27,7 @@ public class LoginController {
 	@Autowired
 	private OrderRepository orderRepository;
 
-	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/user/", "/user/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
@@ -35,7 +35,7 @@ public class LoginController {
 	}
 
 
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
+	@RequestMapping(value="/user/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
 		Customer customer = new Customer();
@@ -44,7 +44,7 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/registration", method = RequestMethod.POST)
 	public ModelAndView createNewCustomer(@Valid Customer customer, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		Customer customerExists = customerService.findCustomerByEmail(customer.getEmail());
@@ -65,13 +65,14 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/home", method = RequestMethod.GET)
+	@RequestMapping(value="/user/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Customer customer = customerService.findCustomerByEmail(auth.getName());
 		ArrayList<Order> orders = orderRepository.findByCustomerId(customer.getId());
 		System.out.print( orders.size()+"");
+		modelAndView.addObject( "flag","order" );
 		modelAndView.addObject( "orders",orders );
 		modelAndView.addObject("customerName", "Welcome " + customer.getName()  + " (" + customer.getEmail() + ")");
 		modelAndView.setViewName("home");

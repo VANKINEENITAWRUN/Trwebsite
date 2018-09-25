@@ -13,59 +13,59 @@
 
 
 
-<form th:action="@{/}" method="get">
+<form th:action="@{/packer/login}" method="get">
     <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
 </form>
 
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form autocomplete="off" action="#" th:action="@{/registration}"
-                  th:object="${customer}" method="post" enctype="multipart/form-data" class="form-horizontal"
+            <form autocomplete="off" action="#" enctype="multipart/form-data" th:action="@{/packer/registration}"
+                   method="post" class="form-horizontal"
                   role="form">
                 <h2>Registration Form</h2>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                        <label th:if="${#fields.hasErrors('packer.company_name')}" th:errors="${packer.company_name}"
                                class="validation-message"></label>
-                        <input type="text" th:field="*{name}" placeholder="Company Name"
+                        <input type="text" th:field="${packer.company_name}" placeholder="Company Name"
                                class="form-control"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{phonenumber}"
+                        <label th:if="${#fields.hasErrors('packer.phonenumber')}" th:errors="${packer.phonenumber}"
                                class="validation-message"></label>
-                        <input type="text" th:field="*{phonenumber}"
+                        <input type="number" th:field="${packer.phonenumber}"
                                placeholder="Phone Number" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{email}" placeholder="Email"
+                        <input type="text" th:field="${packer.email}" placeholder="Email"
                                class="form-control"/> <label
-                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                            th:if="${#fields.hasErrors('packer.email')}" th:errors="${packer.email}"
                             class="validation-message"></label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="password" th:field="*{password}"
+                        <input type="password" th:field="${packer.password}"
                                placeholder="Password" class="form-control"/> <label
-                            th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                            th:if="${#fields.hasErrors('packer.password')}" th:errors="${packer.password}"
                             class="validation-message"></label>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" >
                     <div class="col-sm-9">
-                        <label for="pic">Packer Ceritficate</label>
-                        <input type="file" id="pic" th:field="*{pic}"
+                        <label for="file">Packer Ceritficate</label>
+                        <input type="file" id="file" name="file"
                                 class="form-control" />
 
-                        <label
-                                th:if="${#fields.hasErrors('pic')}" th:errors="*{pic}"
-                                class="validation-message"></label>
+                        <!--<label  th:field="${image.image}"-->
+                                <!--th:if="${#fields.hasErrors('image.image')}"  th:errors="${image.image}"-->
+                                <!--class="validation-message"></label>-->
 
                     </div>
                 </div>

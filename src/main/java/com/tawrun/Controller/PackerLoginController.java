@@ -1,13 +1,15 @@
 package com.tawrun.Controller;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 
+import com.tawrun.Repository.ImageRepository;
 import com.tawrun.Repository.OrderRepository;
-import com.tawrun.Services.CustomerService;
 import com.tawrun.Services.PackerServices;
-import com.tawrun.model.Customer;
+import com.tawrun.model.Image;
 import com.tawrun.model.Order;
 import com.tawrun.model.Packer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/packer")
+//@RequestMapping("/packer")
 public class PackerLoginController {
 
 
@@ -29,25 +35,31 @@ public class PackerLoginController {
 	@Autowired
 	private OrderRepository orderRepository;
 
-	@RequestMapping(value={"login"}, method = RequestMethod.GET)
+
+	@RequestMapping(value={"/packer/login","/packer/"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
+		modelAndView.setViewName("packer_login");
 		return modelAndView;
 	}
 
 
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
+	@RequestMapping(value="/packer/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
-		Packer customer = new Packer();
-		modelAndView.addObject("customer", customer);
+		Packer packer = new Packer();
+
+		Image image =new Image();
+		modelAndView.addObject( "image", image);
+		modelAndView.addObject("packer", packer);
 		modelAndView.setViewName("packer_registration");
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewCustomer(@Valid Packer packer, BindingResult bindingResult) {
+	@RequestMapping(value = "/packer/registration", method = RequestMethod.POST)
+	public ModelAndView createNewCustomer( @Valid @ModelAttribute("packer") Packer packer,
+										   BindingResult bindingResult ,@Valid @RequestParam("file") MultipartFile file)
+			throws IOException {
 		ModelAndView modelAndView = new ModelAndView();
 		Packer customerExists = packerServices.findPackerByEmail(packer.getEmail());
 		if (customerExists != null) {
@@ -55,10 +67,21 @@ public class PackerLoginController {
 					.rejectValue("email", "error.customer",
 								 "There is already a customer registered with the email provided");
 		}
+		System.out.println("File:" + file.getName());
+		System.out.println("ContentType:" + file.getContentType());
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("registration");
+			modelAndView.setViewName("packer_registration");
+			System.out.print(bindingResult.hasErrors());
+			List<FieldError> errors = bindingResult.getFieldErrors();
+			for ( FieldError error : errors ) {
+				System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
+			}
 		} else {
-			packerServices.savePacker(packer);
+
+
+
+			packerServices.savePacker(packer,file.getBytes());
+			modelAndView.addObject( "image",new Image() );
 			modelAndView.addObject("successMessage", "Customer has been registered successfully");
 			modelAndView.addObject("customer", new Packer());
 			modelAndView.setViewName("packer_registration");
@@ -67,16 +90,19 @@ public class PackerLoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/home", method = RequestMethod.GET)
+	@RequestMapping(value="/packer/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Packer customer = packerServices.findPackerByEmail(auth.getName());
+		Packer packer = packerServices.findPackerByEmail(auth.getName());
 		ArrayList<Order> orders = new ArrayList<Order>( orderRepository.findAll() ) ;
-//		System.out.print( orders.size()+"");
+
+		System.out.print( orders.size()+" packer");
+		modelAndView.addObject( "flag",	"packer" );
 		modelAndView.addObject( "orders",orders );
-		modelAndView.addObject("customerName", "Welcome " + customer.getName()  + " (" + customer.getEmail() + ")");
-		modelAndView.setViewName("home");
+		modelAndView.addObject("customerName", "Welcome " + packer.getCompany_name()  + " (" + packer.getEmail() + ")");
+
+		modelAndView.setViewName("packer_home");
 		return modelAndView;
 	}
 

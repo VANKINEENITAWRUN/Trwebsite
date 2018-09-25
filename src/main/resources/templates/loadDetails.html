@@ -26,11 +26,11 @@
 
         <nav id="nav-menu-container">
             <ul class="nav-menu">
-                <li class="menu-active"><a th:href="@{/home}">Home</a></li>
+                <li class="menu-active"><a th:href="@{/user/home}">Home</a></li>
                 <li class="menu-active"><a href="#about">About Us</a></li>
                 <!-- <li><a href="#services">Services</a></li> -->
                 <!-- <li><a href="#portfolio">Portfolio</a></li> -->
-                <li class="menu-active"><a th:href="@{/postload}">PostLoad</a></li>
+                <li class="menu-active"><a th:href="@{/user/postload}">PostLoad</a></li>
                 <!-- <li class="menu-has-children"><a href="">Drop Down</a> -->
                 <!-- <ul>
                   <li><a href="#">Drop Down 1</a></li>
@@ -39,14 +39,14 @@
                   <li><a href="#">Drop Down 5</a></li>
                 </ul>
               </li> -->
-                <li class="menu-active" ><a th:href="@{/logout}">Logout</a></li>
+                <li class="menu-active" ><a th:href="@{/user/logout}">Logout</a></li>
             </ul>
         </nav><!-- #nav-menu-container -->
     </div>
 </header><!-- #header -->
 
 <div>
-<form style="margin-left:10%" autocomplete="off" action="#" th:action="@{/postload}"
+<form style="margin-left:10%" autocomplete="off" action="#" th:action="@{/user/postload}"
       th:object="${order}" method="post" class="form-horizontal"
       role="form">
     <h2>Order Form</h2><br>
