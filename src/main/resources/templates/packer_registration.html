@@ -37,7 +37,7 @@
                     <div class="col-sm-9">
                         <label th:if="${#fields.hasErrors('packer.phonenumber')}" th:errors="${packer.phonenumber}"
                                class="validation-message"></label>
-                        <input type="number" th:field="${packer.phonenumber}"
+                        <input type="tel" th:field="${packer.phonenumber}"
                                placeholder="Phone Number" class="form-control"/>
                     </div>
                 </div>

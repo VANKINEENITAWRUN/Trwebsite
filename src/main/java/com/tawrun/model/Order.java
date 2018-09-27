@@ -85,5 +85,10 @@ public class Order  {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Customer customer;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "packer_id", nullable = true)
+	private Packer packer;
+
+
 
 }

@@ -66,7 +66,7 @@ public class SecurityConfiguration{
 				.passwordParameter("password")
 				.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
+				.logoutSuccessUrl("/user/login").and().exceptionHandling()
 				.accessDeniedPage("/access-denied");
 	}
 
@@ -127,7 +127,7 @@ public class SecurityConfiguration{
 					.passwordParameter("password")
 					.and().logout()
 					.logoutRequestMatcher(new AntPathRequestMatcher("/packer/logout"))
-					.logoutSuccessUrl("/packer").and().exceptionHandling()
+					.logoutSuccessUrl("/packer/login").and().exceptionHandling()
 					.accessDeniedPage("/access-denied");
 		}
 

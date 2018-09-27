@@ -12,6 +12,7 @@ import com.tawrun.Services.PackerServices;
 import com.tawrun.model.Image;
 import com.tawrun.model.Order;
 import com.tawrun.model.Packer;
+import com.tawrun.model.Quote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -98,6 +99,10 @@ public class PackerLoginController {
 		ArrayList<Order> orders = new ArrayList<Order>( orderRepository.findAll() ) ;
 
 		System.out.print( orders.size()+" packer");
+		Quote q= new Quote();
+
+		modelAndView.addObject( "quote", q);
+
 		modelAndView.addObject( "flag",	"packer" );
 		modelAndView.addObject( "orders",orders );
 		modelAndView.addObject("customerName", "Welcome " + packer.getCompany_name()  + " (" + packer.getEmail() + ")");

@@ -87,8 +87,9 @@
                                              order.getLoading_city()}"></p>
 
                         <!--<a th:href="@{'/packer/order/'+${order.getId()}}" class="btn btn-primary">Complete Details</a>-->
-                        <button onclick="document.getElementById('modal-wrapper').style.display='block'" style="width:200px; margin-top:200px; margin-left:160px;">
+                        <button  th:onclick="'javascript:popUP('+${order.getId()}+')'" class="reset"  >
                             Quote</button>
+
 
                     </div>
                     <div class="form-group col-md-3">
@@ -96,7 +97,7 @@
 
                         <p th:text="${'floor no '+ order.getUnloading_floorno()+' ,'+order.getUnloading_location()+'  ,'+
                                              order.getUnloading_city()}"></p>
-                        <a th:href="@{'/packer/quotes/'+${order.getId()}}" class="btn btn-primary">Quotes</a>
+                        <a th:href="@{'/packer/orders/'+${order.getId()}}" class="btn btn-primary">CompleteDetails</a>
 
                     </div>
 
@@ -107,12 +108,13 @@
             </div>
         </div>
 
-
+    </tr>
 </div>
+
 
 <div id="modal-wrapper" class="modal">
 
-    <form class="modal-content animate" th:action="@{'/packer/quote/'+${order.getId()}}">
+    <form class="modal-content animate" th:id="newQuoteForm" th:action="@{'/packer/quote/'}">
 
         <div class="imgcontainer">
             <span onclick="document.getElementById('modal-wrapper').style.display='none'" class="close" title="Close PopUp">&times;</span>
@@ -121,16 +123,140 @@
         </div>
 
         <div class="container">
-            <input type="text" placeholder="Enter Username" name="uname">
-            <input type="password" placeholder="Enter Password" name="psw">
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <label for ="packing_Price"> Packing Price</label>
+                    <input type="number" id ="packing_Price" th:field="${quote.packing_price}" placeholder="packing price"
+                           class="form-control"/>
+                    <label
+                            th:if="${#fields.hasErrors('quote.packing_price')}" th:errors="${quote.packing_price}"
+                            class="validation-message"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <label for ="loading_Price">Loading Price</label>
+                    <input type="number" id ="loading_Price" th:field="${quote.loading_price}" placeholder="loading price"
+                           class="form-control"/> <label
+                        th:if="${#fields.hasErrors('quote.loading_price')}" th:errors="${quote.loading_price}"
+                        class="validation-message"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <label for ="unloading_Price"> UnLoading Price</label>
+                    <input type="number" id ="unloading_Price" th:field="${quote.unloading_price}" placeholder="unloading price"
+                           class="form-control"/> <label
+                        th:if="${#fields.hasErrors('quote.unloading_price')}" th:errors="${quote.unloading_price}"
+                        class="validation-message"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <label for ="unpacking_Price"> UnPacking Price</label>
+                    <input type="number" id ="unpacking_Price" th:field="${quote.unpacking_price}" placeholder="unpacking price"
+                           class="form-control"/> <label
+                        th:if="${#fields.hasErrors('quote.unpacking_price')}" th:errors="${quote.unpacking_price}"
+                        class="validation-message"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <label for="transport_price"> Transportation Price</label>
+                    <input type="number" id="transport_price" th:field="${quote.transportation_price}" placeholder="Transportation price "
+                           class="form-control"/> <label
+                        th:if="${#fields.hasErrors('quote.transportation_price')}" th:errors="${quote.transportation_price}"
+                        class="validation-message"></label>
+                </div>
+            </div>
+
+
+
             <button type="submit">Login</button>
+            <div th:id="sPhoneFromResponse"></div>
         </div>
 
     </form>
 
 </div>
 
-</tr>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    // If user clicks anywhere outside of the modal, Modal will close
 
+    var modal = document.getElementById('modal-wrapper');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+
+    }
+    var ids;
+    function popUP(pid){
+
+        document.getElementById('modal-wrapper').style.display='block'
+            ids=pid;
+        $("#newQuoteForm").trigger('reset');
+        $("#sPhoneFromResponse").html("");
+    }
+
+
+    $(document).ready(function() {
+
+        $('#newQuoteForm').submit(function(event) {
+
+
+
+            var packing_price = $('#packing_Price').val();
+            var unpacking_price = $('#unpacking_Price').val();
+            var loading_price = $('#loading_Price').val();
+            var unloading_price = $('#unloading_Price').val();
+            var transportation_price = $('#transport_price').val();
+
+            console.log(unloading_price + "\t" + loading_price);
+            console.log(packing_price + "\t" + unpacking_price);
+            console.log(transportation_price);
+            var json = { "packing_price" : packing_price, "unpacking_price" : unpacking_price,
+                "loading_price": loading_price,"unloading_price":unloading_price,
+                "transportation_price":transportation_price};
+            var ur=$("#newQuoteForm").attr( "action")+ids;
+            $.ajax({
+
+                       url:ur,
+                       data: JSON.stringify(json),
+                       type: "POST",
+
+                       beforeSend: function(xhr) {
+                           xhr.setRequestHeader("Accept", "application/json");
+                           xhr.setRequestHeader("Content-Type", "application/json");
+                       },
+                       success: function(quote) {
+                           var respContent = "";
+                           console.log('Recieved authentication error');
+                           console.log(quote) ;
+                           if(!quote){
+
+
+                               respContent += "<span class='success'>Can ONly Quote Once</span>";
+                           }
+
+
+                          else {
+                               respContent += "<span class='success'>Smartphone was created: [";
+                               respContent += quote.packing_price + " : ";
+                               respContent += quote.unpacking_price + " : ";
+                               respContent += quote.loading_price + " : ";
+                               respContent += quote.unloading_price + " : ";
+                               respContent += quote.transportation_price + "]</span>";
+                           }
+                           $("#sPhoneFromResponse").html(respContent);
+                       }
+                   });
+
+            event.preventDefault();
+        });
+
+    });
+</script>
 </body>
 </html>
