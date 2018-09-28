@@ -41,8 +41,11 @@ public class PayPalClient {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:4200/cancel");
-        redirectUrls.setReturnUrl("http://localhost:4200/");
+
+        // TODO Currently failure and success redirect URL's are the same.
+        // TODO U wont the diff if its passed or not. Make them separate
+        redirectUrls.setCancelUrl("http://localhost:8080/packer/home");
+        redirectUrls.setReturnUrl("http://localhost:8080/packer/home");
         payment.setRedirectUrls(redirectUrls);
         Payment createdPayment;
         try {

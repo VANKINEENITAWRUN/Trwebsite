@@ -71,6 +71,11 @@
     </div>
 </div>
 <br>
+
+<div style="position: fixed; bottom: 5%; right: 5%; z-index: 10;background: aliceblue">
+    <input id="orderPrice" placeholder="Enter amount to pay"/>
+    <button style="font-size:24px" id="paymentButton">Pay Using <i class="fa fa-cc-paypal"></i></button>
+</div>
 <div>
     <tr th:each="order: ${orders}">
 
@@ -182,6 +187,20 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
+
+    // Add payment listener. Make a payment on click
+    $("#paymentButton").click(function(){
+        var sum = $("#orderPrice").val();
+        console.log(sum);
+        $.post(window.location.origin+'/paypal/make/payment?sum='+sum,
+            function(response){
+                console.log(response);
+
+                // redirect to payment page
+                window.location.replace(response["redirect_url"]);
+        });
+    });
+
     // If user clicks anywhere outside of the modal, Modal will close
 
     var modal = document.getElementById('modal-wrapper');
