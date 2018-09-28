@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -70,4 +71,14 @@ public class OrderController {
 				"Loading","Packing","Transportation","Unloading","Unpacking ","Insurance"
 		};
 	}
+	@RequestMapping(value="/order/{id}", method = RequestMethod.GET)
+	public ModelAndView completeDetails(@PathVariable Long id){
+		ModelAndView modelAndView = new ModelAndView();
+		Order order=orderRepository.findById( id ).get();
+		modelAndView.addObject("order", order);
+		modelAndView.setViewName("complete_loadDetails");
+		return modelAndView;
+	}
+
+
 }

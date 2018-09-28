@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <style type="text/css">
+        body {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin:0 !important;
+            width: 100% !important;
+            -webkit-text-size-adjust: 100% !important;
+            -ms-text-size-adjust: 100% !important;
+            -webkit-font-smoothing: antialiased !important;
+        }
+        .tableContent img {
+            border: 0 !important;
+            display: block !important;
+            outline: none !important;
+        }
+        a{
+            color:#382F2E;
+        }
+
+        p, h1,h2,ul,ol,li,div{
+            margin:0;
+            padding:0;
+        }
+
+        h1,h2{
+            font-weight: normal;
+            background:transparent !important;
+            border:none !important;
+        }
+
+        @media only screen and (max-width:480px)
+
+        {
+
+            table[class="MainContainer"], td[class="cell"]
+            {
+                width: 100% !important;
+                height:auto !important;
+            }
+            td[class="specbundle"]
+            {
+                width: 100% !important;
+                float:left !important;
+                font-size:13px !important;
+                line-height:17px !important;
+                display:block !important;
+                padding-bottom:15px !important;
+            }
+            td[class="specbundle2"]
+            {
+                width:80% !important;
+                float:left !important;
+                font-size:13px !important;
+                line-height:17px !important;
+                display:block !important;
+                padding-bottom:10px !important;
+                padding-left:10% !important;
+                padding-right:10% !important;
+            }
+
+            td[class="spechide"]
+            {
+                display:none !important;
+            }
+            img[class="banner"]
+            {
+                width: 100% !important;
+                height: auto !important;
+            }
+            td[class="left_pad"]
+            {
+                padding-left:15px !important;
+                padding-right:15px !important;
+            }
+
+        }
+
+        @media only screen and (max-width:540px)
+
+        {
+
+            table[class="MainContainer"], td[class="cell"]
+            {
+                width: 100% !important;
+                height:auto !important;
+            }
+            td[class="specbundle"]
+            {
+                width: 100% !important;
+                float:left !important;
+                font-size:13px !important;
+                line-height:17px !important;
+                display:block !important;
+                padding-bottom:15px !important;
+            }
+            td[class="specbundle2"]
+            {
+                width:80% !important;
+                float:left !important;
+                font-size:13px !important;
+                line-height:17px !important;
+                display:block !important;
+                padding-bottom:10px !important;
+                padding-left:10% !important;
+                padding-right:10% !important;
+            }
+
+            td[class="spechide"]
+            {
+                display:none !important;
+            }
+            img[class="banner"]
+            {
+                width: 100% !important;
+                height: auto !important;
+            }
+            td[class="left_pad"]
+            {
+                padding-left:15px !important;
+                padding-right:15px !important;
+            }
+
+        }
+
+        .contentEditable h2.big,.contentEditable h1.big{
+            font-size: 26px !important;
+        }
+
+        .contentEditable h2.bigger,.contentEditable h1.bigger{
+            font-size: 37px !important;
+        }
+
+        td,table{
+            vertical-align: top;
+        }
+        td.middle{
+            vertical-align: middle;
+        }
+
+        a.link1{
+            font-size:13px;
+            color:#27A1E5;
+            line-height: 24px;
+            text-decoration:none;
+        }
+        a{
+            text-decoration: none;
+        }
+
+        .link2{
+            color:#ffffff;
+            border-top:10px solid #27A1E5;
+            border-bottom:10px solid #27A1E5;
+            border-left:18px solid #27A1E5;
+            border-right:18px solid #27A1E5;
+            border-radius:3px;
+            -moz-border-radius:3px;
+            -webkit-border-radius:3px;
+            background:#27A1E5;
+        }
+
+        .link3{
+            color:#555555;
+            border:1px solid #cccccc;
+            padding:10px 18px;
+            border-radius:3px;
+            -moz-border-radius:3px;
+            -webkit-border-radius:3px;
+            background:#ffffff;
+        }
+
+        .link4{
+            color:#27A1E5;
+            line-height: 24px;
+        }
+
+        h2,h1{
+            line-height: 20px;
+        }
+        p{
+            font-size: 14px;
+            line-height: 21px;
+            color:black;
+        }
+
+        .contentEditable li{
+
+        }
+
+        .appart p{
+
+        }
+        .bgItem{
+            background: white;
+        }
+        .bgBody{
+            background: white;
+        }
+
+        img {
+            outline:none;
+            text-decoration:none;
+            -ms-interpolation-mode: bicubic;
+            width: auto;
+            max-width: 100%;
+            clear: both;
+            display: block;
+            float: none;
+        }
+
+    </style>
+
+
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 40%;
+            border-radius: 5px;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        /* img {
+            border-radius: 5px 5px 0 0;
+        } */
+
+        .container {
+            padding: 2px 16px;
+        }
+    </style>
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/ionicons/css/ionicons.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/lightbox/css/lightbox.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>Complete Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js}"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body paddingwidth="0" paddingheight="0" bgcolor="white"  style="padding-top: 0; padding-bottom: 0; background-repeat: repeat; width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased;" offset="0" toppadding="0" leftpadding="0">
+<header id="header">
+    <div class="container-fluid">
+
+            <div id="logo" class="pull-left">
+            <!-- <img src="img/trlogo.png" style="color: white;"> -->
+            <!-- <h1><a href="#intro" class="scrollto">BizPage</a></h1> -->
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a th:href="@{/user/home}">Home</a></li>
+                <li class="menu-active"><a href="#about">About Us</a></li>
+                <!-- <li><a href="#services">Services</a></li> -->
+                <!-- <li><a href="#portfolio">Portfolio</a></li> -->
+                <li class="menu-active"><a th:href="@{/user/postload}">PostLoad</a></li>
+                <!-- <li class="menu-has-children"><a href="">Drop Down</a> -->
+                <!-- <ul>
+                  <li><a href="#">Drop Down 1</a></li>
+                  <li><a href="#">Drop Down 3</a></li>
+                  <li><a href="#">Drop Down 4</a></li>
+                  <li><a href="#">Drop Down 5</a></li>
+                </ul>
+              </li> -->
+                <li class="menu-active" ><a th:href="@{/user/logout}">Logout</a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+<table width="100%"  align="center" cellspacing="0" cellpadding="0" >
+    <tbody >
+    <tr>
+        <td>
+            <table width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#00ff7f" style="font-family:helvetica, sans-serif;" class="MainContainer">
+            <!-- =============== START HEADER =============== -->
+            <tbody>
+            <tr>
+
+                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;margin-left: 20%; width: 90%;">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <td height="40"></td>
+                            </tr>
+                            <tr>
+                                <td><table width="80%" border="0" cellspacing="0" cellpadding="0"  style="margin-left: 20%">
+                                    <tbody>
+                                    <h3>Load details</h3>
+                                    <tr>
+                                        <!-- <div class="card"> -->
+                                        <td class="specbundle card">
+                                            <div class='contentEditableContainer contentTextEditable'>
+                                            <div class='contentEditable' style='text-align: center; padding-top: 10%;'>
+                                                <h2 style="font-size: 20px;"><b>Loading Address</b></h2>
+
+                                                <p th:utext="'<b> Floor no: </b>'+${order.getLoading_floorno()}"></p>
+
+                                                <p th:utext="'<b> Loading City: </b>'+${order.getLoading_city()}"></p>
+
+                                                <p th:utext="'<b>Loading Location: </b>'+${order.getLoading_location()}"></p>
+
+                                                <!-- <a target='_blank' href="#" class='link2' style='color:#ffffff'>Call to action</a> -->
+                                                <!-- <br> -->
+                                            </div>
+                                        </div>
+                                        </td>
+                                        <!-- </div> -->
+                                        <td valign="top" width="75" class="specbundle">&nbsp;</td>
+                                        <!-- <div class="card"> -->
+
+                                        <td class="specbundle card"><div class='contentEditableContainer contentTextEditable'>
+                                            <div class='contentEditable' style='text-align: center; padding-top: 10%;'>
+                                                <h2 style="font-size: 20px;"><b>Unloading Address</b>></h2>
+
+
+                                                <p th:utext="'<b> Floor no: </b>'+${order.getUnloading_floorno()}"></p>
+
+                                                <p th:utext="'<b> City: </b>'+${order.getUnloading_city()}"></p>
+
+                                                <p th:utext="'<b> Location: </b>'+${order.getUnloading_location()}"></p>
+
+
+                                            </div>
+                                        </div>
+                                        </td>
+                                        <!-- </div> -->
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <br>
+                                <br>
+                                <strong style="margin-left: 5%;">Shifting date:  </strong>
+                                <p style="display: inline;" th:text="${order.getDateofshifting()}"></p>
+                                <td height="40"></td>
+                            </tr>
+                            <tr>
+                                <td style="background:#F6F6F6; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px">
+                                    <table width="40%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                    <h3 style="margin-left:10%" ><b>Items</b> </h3>
+
+<!--TODO list of items-->
+                                   <ul style="margin-left: 10%">
+                                    <li th:each="item : ${order.getShifting_items()}" th:text="${item}"></li>
+                                    </ul>
+                                    </tbody>
+
+                                </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
+                        <h3 style="margin-left:10%;">
+                            <b>Services</b>
+                        </h3>
+                        <ul style="margin-left:10%;">
+                           <!--TODO services-->
+                            <ul>
+                                <li th:each="item : ${order.getServices()}" th:text="${item}"></li>
+                            </ul>
+                        </ul>
+                    </div>
+
+                    <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
+
+                        <p style="margin-left: 3%;"><br> The TruckReloaders Team </p><br><br><br><br>
+                    </div>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </td>
+        <td valign="top" width="20">&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+</body>
+</html>
+
+</html>
