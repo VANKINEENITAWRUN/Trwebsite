@@ -4,6 +4,7 @@ import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ client ID: AWkwWxlmZXEEUJ8wvF5wYv71w9dr94RnM4gRPNqcqyc_8paJsov_oGcHDn1KpPd0gKsYu
 sandbox account: sushsilsharma.ss451-facilitator@gmail.com
  */
 
+@Service
 public class PayPalClient {
     String clientId = "AWkwWxlmZXEEUJ8wvF5wYv71w9dr94RnM4gRPNqcqyc_8paJsov_oGcHDn1KpPd0gKsYulGHYHJZdsms";
     String clientSecret = "EEDSEjTkEe7pYE74R_7AZI-njS3bpo3P8IhP36elsFN5p26xTk4g1FEVos_3ZwZYee6drp0IOy1OpPuG";
@@ -39,8 +41,11 @@ public class PayPalClient {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:4200/cancel");
-        redirectUrls.setReturnUrl("http://localhost:4200/");
+
+        // TODO Currently failure and success redirect URL's are the same.
+        // TODO U wont the diff if its passed or not. Make them separate
+        redirectUrls.setCancelUrl("http://localhost:8080/packer/home");
+        redirectUrls.setReturnUrl("http://localhost:8080/packer/home");
         payment.setRedirectUrls(redirectUrls);
         Payment createdPayment;
         try {
@@ -71,6 +76,10 @@ public class PayPalClient {
 
         PaymentExecution paymentExecution = new PaymentExecution();
         paymentExecution.setPayerId(req.getParameter("PayerID"));
+
+        System.out.println("Payment ID is: "+req.getParameter("paymentId"));
+        System.out.println("Payer ID is: "+req.getParameter("PayerID"));
+
         try {
             APIContext context = new APIContext(clientId, clientSecret, "sandbox");
             Payment createdPayment = payment.execute(context, paymentExecution);
