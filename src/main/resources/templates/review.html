@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
 <head>
 
     <!-- Bootstrap CSS File -->
@@ -16,18 +16,13 @@
 
     <!-- Main Stylesheet File -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
-    <title>User Page</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <title>Reviews Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js}"></script>
     <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 </head>
-
 <body>
 
-<!--==========================
-   Header
- ============================-->
 <header id="header">
     <div class="container-fluid">
 
@@ -59,64 +54,39 @@
     </div>
 </header><!-- #header -->
 
-<br>
-    <br>
-
-    <div class="panel-group" style="margin-top:40px">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span th:utext="${customerName}"></span>
-            </div>
-
-        </div>
-    </div>
-    <br>
 
 <div class="panel-group" style="margin-top:40px">
     <div class="panel panel-primary">
         <div class="panel-heading">
-           <h3> List Of Orders </h3>
+            <h3 th:utext="'<b>Packer Company :     </b>'+${packer.getCompany_name()}"> </h3>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+
+
+            <h5  th:utext="'<b>UnLoading Price :    </b>'"></h5>
+
+
+        </div>
+        <div class="form-group col-md-6">
+
+            <!--<button >Accept Quote </button>-->
+
+            <form th:action="@{'/user/download/'+${packer.getId()}}">
+                <input type="submit" value="Check Certificate" />
+            </form>
+
+
         </div>
 
     </div>
 </div>
-    <div>
-        <tr th:each="order: ${orders}">
-
-            <div class="card" style="margin:10%">
 
 
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${'shifting Date :'+ order.getDateofshifting()}"> </h5>
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <h6>Loading Adress</h6>
 
-                            <p th:text="${'floor no  '+ order.getLoading_floorno()+' ,'+order.getLoading_location()+' ,'+
-                                             order.getLoading_city()}"></p>
-
-                            <a th:href="@{'/user/order/'+${order.getId()}}" class="btn btn-primary">Complete Details</a>
-
-                        </div>
-                        <div class="form-group col-md-3">
-                            <h6>Loading Adress</h6>
-
-                            <p th:text="${'floor no '+ order.getUnloading_floorno()+' ,'+order.getUnloading_location()+'  ,'+
-                                             order.getUnloading_city()}"></p>
-                            <a th:href="@{'/user/quotes/'+${order.getId()}}" class="btn btn-primary">Quotes</a>
-
-                        </div>
-
-
-                    </div>
-
-                    <p class="card-text"></p>
-                </div>
-            </div>
-
-        </tr>
-
-    </div>
 
 
 </body>

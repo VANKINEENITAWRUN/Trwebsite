@@ -119,6 +119,15 @@ button:hover {
     from {transform: scale(0)}
     to {transform: scale(1)}
 }
+.container{
+  width: 100%;
+  float: left;
+  border: solid 1px blue;
+  text-align: center;
+}
+.container button{
+  display: inline-block;
+}
 
 /* Back to top button */
 .back-to-top {

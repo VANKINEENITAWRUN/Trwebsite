@@ -1,6 +1,7 @@
 package com.tawrun.Services;
 
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -15,6 +16,7 @@ import com.tawrun.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("packerService")
 public class PackerServices {
@@ -41,9 +43,11 @@ public class PackerServices {
 	public Packer findPackerById(int id){
 		return packerRepository.findById( id );
 	}
-	public void savePacker(Packer packer, byte[] image) {
+	public void savePacker(Packer packer, MultipartFile file) throws IOException {
 		Image image11=new Image();
-		image11.setImage( image );
+		image11.setImage( file.getBytes() );
+		image11.setContentType( file.getContentType() );
+		image11.setName( file.getName() );
 		Image i=imageRepository.save( image11);
 //		int id =i.getId();
 		packer.setImage( i );

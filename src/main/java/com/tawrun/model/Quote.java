@@ -50,15 +50,18 @@ public class Quote {
 
 	@Column(name = "packing_price")
 	@NotBlank(message = "*Please provide your packing price")
-	private String packing_price;
+	@Range(min = 0)
+	private int packing_price;
 
 	@Column(name = "unpacking_price")
+	@Range(min = 0)
 	@NotBlank(message = "*Please provide your unpacking price")
-	private String unpacking_price;
+	private int unpacking_price;
 
 	@Column(name = "transportation_price")
+	@Range(min = 0)
 	@NotBlank(message = "*Please provide your transportation price")
-	private String transportation_price;
+	private int transportation_price;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

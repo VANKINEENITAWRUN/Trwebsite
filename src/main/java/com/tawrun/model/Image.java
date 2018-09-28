@@ -33,6 +33,12 @@ public class Image {
 	@NotEmpty(message = "*Please provide any Certificate")
 	private byte [] image ;
 
+	@Column(name="name")
+	private String name;
+
+	@Column(name="content_type")
+	private String contentType;
+
 
 	@OneToOne(mappedBy = "image")
 	private Packer packer;
