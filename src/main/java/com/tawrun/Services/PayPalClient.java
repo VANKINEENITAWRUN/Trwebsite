@@ -4,6 +4,7 @@ import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ client ID: AWkwWxlmZXEEUJ8wvF5wYv71w9dr94RnM4gRPNqcqyc_8paJsov_oGcHDn1KpPd0gKsYu
 sandbox account: sushsilsharma.ss451-facilitator@gmail.com
  */
 
+@Service
 public class PayPalClient {
     String clientId = "AWkwWxlmZXEEUJ8wvF5wYv71w9dr94RnM4gRPNqcqyc_8paJsov_oGcHDn1KpPd0gKsYulGHYHJZdsms";
     String clientSecret = "EEDSEjTkEe7pYE74R_7AZI-njS3bpo3P8IhP36elsFN5p26xTk4g1FEVos_3ZwZYee6drp0IOy1OpPuG";
