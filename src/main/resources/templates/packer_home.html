@@ -192,6 +192,9 @@
     $("#paymentButton").click(function(){
         var sum = $("#orderPrice").val();
         console.log(sum);
+
+        console.log('Making first post call');
+
         $.post(window.location.origin+'/paypal/make/payment?sum='+sum,
             function(response){
                 console.log(response);
@@ -200,6 +203,41 @@
                 window.location.replace(response["redirect_url"]);
         });
     });
+
+
+    // define a function to read get parameters from URL string
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+    var paymentId = getUrlParameter('paymentId');
+    var PayerID = getUrlParameter('PayerID');
+
+    console.log(paymentId);
+    console.log(PayerID);
+
+    // check whether we should make the final or not
+    if(paymentId !== undefined && PayerID !== undefined){
+
+        console.log('Making second and final post call');
+
+        // make the final call
+        $.post(window.location.origin+'/paypal/complete/payment?paymentId=' + paymentId + '&PayerID=' + PayerID ,
+            function(resp){
+                console.log(resp);
+            });
+    }
 
     // If user clicks anywhere outside of the modal, Modal will close
 

@@ -76,6 +76,10 @@ public class PayPalClient {
 
         PaymentExecution paymentExecution = new PaymentExecution();
         paymentExecution.setPayerId(req.getParameter("PayerID"));
+
+        System.out.println("Payment ID is: "+req.getParameter("paymentId"));
+        System.out.println("Payer ID is: "+req.getParameter("PayerID"));
+
         try {
             APIContext context = new APIContext(clientId, clientSecret, "sandbox");
             Payment createdPayment = payment.execute(context, paymentExecution);
