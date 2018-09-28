@@ -3,6 +3,7 @@ package com.tawrun.Services;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,26 @@ public class PayPalClient {
             }
         } catch (PayPalRESTException e) {
             System.out.println("Error happened during payment creation!");
+        }
+        return response;
+    }
+
+    public Map<String, Object> completePayment(HttpServletRequest req){
+        Map<String, Object> response = new HashMap<String, Object>();
+        Payment payment = new Payment();
+        payment.setId(req.getParameter("paymentId"));
+
+        PaymentExecution paymentExecution = new PaymentExecution();
+        paymentExecution.setPayerId(req.getParameter("PayerID"));
+        try {
+            APIContext context = new APIContext(clientId, clientSecret, "sandbox");
+            Payment createdPayment = payment.execute(context, paymentExecution);
+            if(createdPayment!=null){
+                response.put("status", "success");
+                response.put("payment", createdPayment);
+            }
+        } catch (PayPalRESTException e) {
+            System.err.println(e.getDetails());
         }
         return response;
     }
