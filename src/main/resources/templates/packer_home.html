@@ -84,6 +84,18 @@
 
             <div class="card-body">
                 <h5 class="card-title" th:text="${'shifting Date :'+ order.getDateofshifting()}"> </h5>
+
+                <div th:if="${order.getPacker()==null}">
+                    <h5 th:utext="'<b>Order Status  :  Pending </b>'"></h5>
+
+                </div>
+                <div th:unless="${order.getPacker()==null}">
+                    <h5 th:if="${order.getPacker().getId()==packer.getId()}"  th:utext="'<b>Order Status  :  Accepted </b>'"> ></h5>
+                    <h5 th:unless="${order.getPacker().getId()==packer.getId()}" th:utext="'<b>Order Status  :  NOt Accepted </b>'" ></h5>
+
+                </div>
+
+
                 <div class="form-row">
                     <div class="form-group col-md-6" style="padding: 5%">
                         <h6><b>Loading Adress</b></h6>

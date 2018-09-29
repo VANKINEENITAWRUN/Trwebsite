@@ -53,7 +53,7 @@
     <div class="form-group col-md-4">
         <label for="dateofs">Date of Shifting</label>
         <input type="date" id="dateofs" th:field="*{dateofshifting}" placeholder="Date of Shifting" class="form-control"><label
-            th:if="${#fields.hasErrors('dateofshifting')}" th:errors="*{dateofshifting}"
+            th:if="${#fields.hasErrors('dateofshifting')}" th:errors="*{dateofshifting} "
             class="validation-message"></label>    </div>
     <div class="form-row">
         <div class="form-group col-md-4">

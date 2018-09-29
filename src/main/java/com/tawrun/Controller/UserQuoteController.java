@@ -81,12 +81,15 @@ public class UserQuoteController {
 
 		Order order= orderRepository.findById( order_id )
 				.orElseThrow(() -> new ResourceNotFoundException( "Order", "id", order_id));
+		System.out.println("b_order"+ order.getPacker() );
 
+		if(order.getPacker()==null){
 
-		if(order.getPacker()!=null){
 			order.setPacker( packerServices.findPackerById( packer_id ) );
 
-			orderRepository.save( order );
+
+
+			Order order1= orderRepository.save( order );
 
 			response.put( "sucess","Your Details will be Shared with Packer");
 

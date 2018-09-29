@@ -97,11 +97,13 @@ public class PackerLoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Packer packer = packerServices.findPackerByEmail(auth.getName());
 		ArrayList<Order> orders = new ArrayList<Order>( orderRepository.findAll() ) ;
+		orders.get( 0 ).getPacker();
 
 		System.out.print( orders.size()+" packer");
 		Quote q= new Quote();
 
 		modelAndView.addObject( "quote", q);
+		modelAndView.addObject( "packer", packer);
 
 		modelAndView.addObject( "flag",	"packer" );
 		modelAndView.addObject( "orders",orders );

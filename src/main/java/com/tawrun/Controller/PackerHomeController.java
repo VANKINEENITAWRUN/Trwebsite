@@ -17,16 +17,17 @@ public class PackerHomeController {
 	@Autowired
 	private OrderRepository orderRepository;
 
-	@RequestMapping(value="/order/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/orders/{id}", method = RequestMethod.GET)
 	public ModelAndView completeDetails(@PathVariable Long id){
-		return getModelAndView( id, orderRepository );
+		return getModelAndView( id,"packer", orderRepository );
 	}
 
 	static ModelAndView getModelAndView(
-			@PathVariable Long id,
+			@PathVariable Long id, String flag,
 			OrderRepository orderRepository) {
 		ModelAndView view = new ModelAndView();
 		Order order= orderRepository.findById( id ).get();
+		view.addObject( "url",flag );
 		view.addObject("order", order);
 		view.setViewName("complete_loadDetails");
 		return view;
