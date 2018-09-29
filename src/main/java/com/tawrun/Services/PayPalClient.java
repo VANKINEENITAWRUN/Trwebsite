@@ -85,7 +85,7 @@ public class PayPalClient {
             Payment createdPayment = payment.execute(context, paymentExecution);
             if(createdPayment!=null){
                 response.put("status", "success");
-                response.put("payment", createdPayment);
+//                response.put("payment", createdPayment);
             }
         } catch (PayPalRESTException e) {
             System.err.println(e.getDetails());

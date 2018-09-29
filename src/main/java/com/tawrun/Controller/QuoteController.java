@@ -37,7 +37,7 @@ public class QuoteController {
 	@RequestMapping(value="/quote/{id}", method= RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Quote createSmartphone(@RequestBody Quote quote, @PathVariable Long id) {
+	public Quote createQuote(@RequestBody Quote quote, @PathVariable Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Packer packer = packerServices.findPackerByEmail( auth.getName());
 
@@ -47,6 +47,7 @@ public class QuoteController {
 		System.out.println( " order unloading price	"+ quote.getUnloading_price() );
 		System.out.println( " order unpacking price		"+ quote.getUnpacking_price() );
 		Order order=orderRepository.findById(id).get();
+//TOdo make price only for selected services
 		if(quoteRepository.alreadyQuoted( id,packer.getId() )) {return  null;}
 		quote.setPacker( packer );
 		quote.setOrder( order);

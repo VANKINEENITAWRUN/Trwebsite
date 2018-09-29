@@ -62,7 +62,10 @@
 
     </div>
 </div>
-
+<div class="alert" id="confirms" style="display:none;">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Accepted</strong> <p id="responsetext"><p>
+</div>
 
 <div align="center">
     <tr th:each="quote: ${quotes}">
@@ -137,7 +140,7 @@
                     </div>
                     <div class="form-group col-md-6">
 
-                        <button >Accept Quote </button>
+                        <button th:onclick="'javascript:acceptQuote(\''+${quote.getOrder().getId()}+'\',\''+${quote.getPacker().getId()} + '\')'">Accept Quote </button>
                     </div>
 
                 </div>
@@ -150,6 +153,46 @@
     </tr>
 
 </div>
+<script>
+    function acceptQuote(orderid,packerid) {
+        if(confirm("Are you sure to Accept ?")){
 
+
+
+            var json = { "orderid" : orderid, "packerid" : packerid,
+               };
+            var ur='http://localhost:8080/user/quote/confirm';
+            $.ajax({
+
+                       url:ur,
+                       data: JSON.stringify(json),
+                       type: "POST",
+
+                       beforeSend: function(xhr) {
+                           xhr.setRequestHeader("Accept", "application/json");
+                           xhr.setRequestHeader("Content-Type", "application/json");
+                       },
+                       success: function(confirm) {
+
+                           console.log(confirm);
+                           console.log(confirm.sucess);
+                           document.getElementById('confirms').style.display='block';
+                           var element = document.getElementById("responsetext");
+                           element.innerHTML = confirm.sucess;
+
+
+
+
+                       },
+                       error:function(){
+                           console.log('in error');
+                       }
+                   });
+
+            event.preventDefault();
+
+        }
+    }
+</script>
 </body>
 </html>

@@ -16,7 +16,7 @@
 
     <!-- Main Stylesheet File -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
-    <title>User Page</title>
+    <title>Packer Home</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js}"></script>
@@ -76,7 +76,7 @@
     <input id="orderPrice" placeholder="Enter amount to pay"/>
     <button style="font-size:24px" id="paymentButton">Pay Using <i class="fa fa-cc-paypal"></i></button>
 </div>
-<div>
+<div class="form-group col-md-8">
     <tr th:each="order: ${orders}">
 
         <div class="card" style="margin:10%">
@@ -85,8 +85,8 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${'shifting Date :'+ order.getDateofshifting()}"> </h5>
                 <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <h6>Loading Adress</h6>
+                    <div class="form-group col-md-6" style="padding: 5%">
+                        <h6><b>Loading Adress</b></h6>
 
                         <p th:text="${'floor no  '+ order.getLoading_floorno()+' ,'+order.getLoading_location()+' ,'+
                                              order.getLoading_city()}"></p>
@@ -97,8 +97,8 @@
 
 
                     </div>
-                    <div class="form-group col-md-3">
-                        <h6>Loading Adress</h6>
+                    <div class="form-group col-md-6" style="padding: 5%">
+                        <h6><b>UnLoading Adress</b></h6>
 
                         <p th:text="${'floor no '+ order.getUnloading_floorno()+' ,'+order.getUnloading_location()+'  ,'+
                                              order.getUnloading_city()}"></p>
@@ -124,7 +124,7 @@
         <div class="imgcontainer">
             <span onclick="document.getElementById('modal-wrapper').style.display='none'" class="close" title="Close PopUp">&times;</span>
             <img src="1.png" alt="Avatar" class="avatar">
-            <h1 style="text-align:center">Modal Popup Box</h1>
+            <h1 style="text-align:center">Quote Box</h1>
         </div>
 
         <div class="container">

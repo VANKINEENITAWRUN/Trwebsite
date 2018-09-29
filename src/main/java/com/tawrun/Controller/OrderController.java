@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.tawrun.Controller.PackerHomeController.getModelAndView;
+
 @Controller
 @RequestMapping("/user")
 public class OrderController {
@@ -73,11 +75,7 @@ public class OrderController {
 	}
 	@RequestMapping(value="/order/{id}", method = RequestMethod.GET)
 	public ModelAndView completeDetails(@PathVariable Long id){
-		ModelAndView modelAndView = new ModelAndView();
-		Order order=orderRepository.findById( id ).get();
-		modelAndView.addObject("order", order);
-		modelAndView.setViewName("complete_loadDetails");
-		return modelAndView;
+		return getModelAndView( id, orderRepository );
 	}
 
 

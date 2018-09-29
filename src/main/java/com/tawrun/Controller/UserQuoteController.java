@@ -5,24 +5,33 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.tawrun.Repository.ImageRepository;
+import com.tawrun.Repository.OrderRepository;
 import com.tawrun.Repository.QuoteRepository;
 import com.tawrun.Repository.ReviewRepository;
 import com.tawrun.Services.PackerServices;
+import com.tawrun.Utils.ResourceNotFoundException;
 import com.tawrun.model.Image;
 import com.tawrun.model.Order;
 import com.tawrun.model.Packer;
 import com.tawrun.model.Quote;
 import com.tawrun.model.Reviews;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,6 +49,10 @@ public class UserQuoteController {
 	@Autowired
 	private PackerServices packerServices;
 
+
+	@Autowired
+	private OrderRepository orderRepository;
+
 	@Autowired
 	private ReviewRepository reviewRepository;
 
@@ -54,6 +67,39 @@ public class UserQuoteController {
 		modelAndView.addObject("quotes", quotes);
 		modelAndView.setViewName("available_quotes");
 		return modelAndView;
+	}
+
+	@RequestMapping(value="/quote/confirm", method= RequestMethod.POST,
+			 consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String, Object> acceptQuote(@RequestBody Map<String, String> request) {
+
+		System.out.println(request);
+		Map<String, Object> response = new HashMap<String, Object>();
+		int packer_id=Integer.parseInt( request.get( "packerid" ) ) ;
+		Long order_id=Long.parseLong( request.get( "orderid" ) ) ;
+
+		Order order= orderRepository.findById( order_id )
+				.orElseThrow(() -> new ResourceNotFoundException( "Order", "id", order_id));
+
+
+		if(order.getPacker()!=null){
+			order.setPacker( packerServices.findPackerById( packer_id ) );
+
+			orderRepository.save( order );
+
+			response.put( "sucess","Your Details will be Shared with Packer");
+
+
+		}else{
+			response.put( "sucess","Already accepted Other Quote");
+
+		}
+
+
+		System.out.println(response);
+		return response;
+
 	}
 
 	@RequestMapping(value = "/packer/{id}",method = RequestMethod.GET)
