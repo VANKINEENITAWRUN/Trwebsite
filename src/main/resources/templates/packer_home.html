@@ -76,56 +76,76 @@
     <input id="orderPrice" placeholder="Enter amount to pay"/>
     <button style="font-size:24px" id="paymentButton">Pay Using <i class="fa fa-cc-paypal"></i></button>
 </div>
-<div class="form-group col-md-8">
-    <tr th:each="order: ${orders}">
 
-        <div class="card" style="margin:10%">
+<div class="column">
+    <div style="width: 50%; float: left" class="form-group col-md-8">
+        <tr th:each="order: ${orders}">
 
-
-            <div class="card-body">
-                <h5 class="card-title" th:text="${'shifting Date :'+ order.getDateofshifting()}"> </h5>
-
-                <div th:if="${order.getPacker()==null}">
-                    <h5 th:utext="'<b>Order Status  :  Pending </b>'"></h5>
-
-                </div>
-                <div th:unless="${order.getPacker()==null}">
-                    <h5 th:if="${order.getPacker().getId()==packer.getId()}"  th:utext="'<b>Order Status  :  Accepted </b>'"> ></h5>
-                    <h5 th:unless="${order.getPacker().getId()==packer.getId()}" th:utext="'<b>Order Status  :  NOt Accepted </b>'" ></h5>
-
-                </div>
+            <div class="card" style="margin:10%">
 
 
-                <div class="form-row">
-                    <div class="form-group col-md-6" style="padding: 5%">
-                        <h6><b>Loading Adress</b></h6>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${'shifting Date :'+ order.getDateofshifting()}"> </h5>
 
-                        <p th:text="${'floor no  '+ order.getLoading_floorno()+' ,'+order.getLoading_location()+' ,'+
+                    <div th:if="${order.getPacker()==null}">
+                        <h5 th:utext="'<b>Order Status  :  Pending </b>'"></h5>
+
+                    </div>
+                    <div th:unless="${order.getPacker()==null}">
+                        <div th:if="${order.getPacker().getId()==packer.getId()}">
+                            <button th:onclick="'javascript:showUserDetails(\''+${order.getCustomer().getUsername()}+'\',\''+${order.getCustomer().getEmail()} + '\')'">Show Contact Details</button>
+                            <h5 th:utext="'<b>Order Status  :  Accepted </b>'">>
+                            </h5>
+                        </div>
+                        <h5 th:unless="${order.getPacker().getId()==packer.getId()}" th:utext="'<b>Order Status  :  NOt Accepted </b>'" ></h5>
+
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6" style="padding: 5%">
+                            <h6><b>Loading Adress</b></h6>
+
+                            <p th:text="${'floor no  '+ order.getLoading_floorno()+' ,'+order.getLoading_location()+' ,'+
                                              order.getLoading_city()}"></p>
 
-                        <!--<a th:href="@{'/packer/order/'+${order.getId()}}" class="btn btn-primary">Complete Details</a>-->
-                        <button  th:onclick="'javascript:popUP('+${order.getId()}+')'" class="reset"  >
-                            Quote</button>
+                            <!--<a th:href="@{'/packer/order/'+${order.getId()}}" class="btn btn-primary">Complete Details</a>-->
+                            <button  th:onclick="'javascript:popUP('+${order.getId()}+')'" class="reset"  >
+                                Quote</button>
 
 
-                    </div>
-                    <div class="form-group col-md-6" style="padding: 5%">
-                        <h6><b>UnLoading Adress</b></h6>
+                        </div>
+                        <div class="form-group col-md-6" style="padding: 5%">
+                            <h6><b>UnLoading Adress</b></h6>
 
-                        <p th:text="${'floor no '+ order.getUnloading_floorno()+' ,'+order.getUnloading_location()+'  ,'+
+                            <p th:text="${'floor no '+ order.getUnloading_floorno()+' ,'+order.getUnloading_location()+'  ,'+
                                              order.getUnloading_city()}"></p>
-                        <a th:href="@{'/packer/orders/'+${order.getId()}}" class="btn btn-primary">CompleteDetails</a>
+                            <a th:href="@{'/packer/orders/'+${order.getId()}}" class="btn btn-primary">CompleteDetails</a>
+
+                        </div>
+
 
                     </div>
 
-
+                    <p class="card-text"></p>
                 </div>
-
-                <p class="card-text"></p>
             </div>
-        </div>
 
-    </tr>
+        </tr>
+    </div>
+    <div style="width: 50%; float: right;" class="form-group col-md-8">
+        <tr th:each="info: ${payinfo}">
+
+            <div class="card" style="margin:10%">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${'Amount :'+ info.getAmount()}"> </h5>
+                    <h5 class="card-title" th:text="${'To :'+ info.getTo()}"> </h5>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+
+        </tr>
+    </div>
 </div>
 
 
@@ -199,6 +219,12 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
+
+
+    // Add click method for show contact details
+    function showUserDetails(username, email){
+        alert(username+" - "+email);
+    }
 
     // Add payment listener. Make a payment on click
     $("#paymentButton").click(function(){

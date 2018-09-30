@@ -9,10 +9,7 @@ import javax.validation.Valid;
 import com.tawrun.Repository.ImageRepository;
 import com.tawrun.Repository.OrderRepository;
 import com.tawrun.Services.PackerServices;
-import com.tawrun.model.Image;
-import com.tawrun.model.Order;
-import com.tawrun.model.Packer;
-import com.tawrun.model.Quote;
+import com.tawrun.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -102,8 +99,28 @@ public class PackerLoginController {
 		System.out.print( orders.size()+" packer");
 		Quote q= new Quote();
 
+		// date, amount, transaction_id
+		List<Payment> payments = new ArrayList<>();
+
+		// date, amount, packer_id, quote_id
+		List<Transaction> transactions = new ArrayList<>();
+
+		// Convert to PayInfo list
+		// PayInfo contains amount, to, date
+		List<PayInfo> payInfos = new ArrayList<>();
+
+		// Logic
+		for(Payment p: payments)
+			payInfos.add(p.toPayInfo());
+
+		// Logic
+		for(Transaction t: transactions)
+			payInfos.add(t.toPayInfo());
+
 		modelAndView.addObject( "quote", q);
 		modelAndView.addObject( "packer", packer);
+
+		modelAndView.addObject( "payinfo", payInfos);
 
 		modelAndView.addObject( "flag",	"packer" );
 		modelAndView.addObject( "orders",orders );
