@@ -37,30 +37,30 @@ public class Quote {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "quote_id")
-	private Long id;
+	private int id;
 
 
 	@Column(name = "loading_price")
-	@Range(min = 0l, message = " provide your loading price")
+//	@Range(min = 0l, message = " provide your loading price")
 	private int loading_price;
 
 	@Column(name = "unloading_price")
-	@Range(min = 0l, message = "Please  provide your unloading price")
+//	@Range(min = 0l, message = "Please  provide your unloading price")
 	private int unloading_price;
 
 	@Column(name = "packing_price")
-	@NotBlank(message = "*Please provide your packing price")
+//	@NotBlank(message = "*Please provide your packing price")
 	@Range(min = 0)
 	private int packing_price;
 
 	@Column(name = "unpacking_price")
 	@Range(min = 0)
-	@NotBlank(message = "*Please provide your unpacking price")
+//	@NotBlank(message = "*Please provide your unpacking price")
 	private int unpacking_price;
 
 	@Column(name = "transportation_price")
 	@Range(min = 0)
-	@NotBlank(message = "*Please provide your transportation price")
+//	@NotBlank(message = "*Please provide your transportation price")
 	private int transportation_price;
 
 	@JsonIgnore

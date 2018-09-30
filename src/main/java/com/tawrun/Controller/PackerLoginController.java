@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import com.tawrun.Repository.ImageRepository;
 import com.tawrun.Repository.OrderRepository;
+import com.tawrun.Repository.PaymentRepository;
+import com.tawrun.Repository.TransactionRepository;
 import com.tawrun.Services.PackerServices;
 import com.tawrun.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,12 @@ public class PackerLoginController {
 	private PackerServices packerServices;
 	@Autowired
 	private OrderRepository orderRepository;
+
+	@Autowired
+	private PaymentRepository paymentRepository;
+
+	@Autowired
+	private TransactionRepository transactionRepository;
 
 
 	@RequestMapping(value={"/packer/login","/packer/"}, method = RequestMethod.GET)
@@ -94,23 +102,24 @@ public class PackerLoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Packer packer = packerServices.findPackerByEmail(auth.getName());
 		ArrayList<Order> orders = new ArrayList<Order>( orderRepository.findAll() ) ;
-		orders.get( 0 ).getPacker();
-
-		System.out.print( orders.size()+" packer");
+////		orders.get( 0 ).getPacker();
+//
+//		System.out.print( orders.size()+" packer");
 		Quote q= new Quote();
 
 		// date, amount, transaction_id
-		List<Payment> payments = new ArrayList<>();
+		List<Payments> payments=paymentRepository.findByPackerId( packer.getId() );
+
 
 		// date, amount, packer_id, quote_id
-		List<Transaction> transactions = new ArrayList<>();
+		List<Transaction> transactions = transactionRepository.findByPackerId( packer.getId() );
 
 		// Convert to PayInfo list
 		// PayInfo contains amount, to, date
 		List<PayInfo> payInfos = new ArrayList<>();
 
 		// Logic
-		for(Payment p: payments)
+		for(Payments p: payments)
 			payInfos.add(p.toPayInfo());
 
 		// Logic

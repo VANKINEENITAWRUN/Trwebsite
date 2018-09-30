@@ -35,7 +35,7 @@ public class Order  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_id")
-	private Long id;
+	private int id;
 
 	@Column(name = "dateofShifting")
 	@Future(message="Only the Future is valid")

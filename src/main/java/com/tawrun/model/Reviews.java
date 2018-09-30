@@ -26,7 +26,7 @@ public class Reviews {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "review_id")
-	private Long id;
+	private int id;
 
 	@Column(name = "unloading_city")
 	@NotBlank(message = "*Please provide your location")

@@ -12,5 +12,8 @@ import org.springframework.stereotype.Repository;
 @Repository("orderRepository")
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+	@Query(value = "select * from orders o where o.user_id=?1 ",nativeQuery = true)
 	ArrayList<Order> findByCustomerId(int customerId);
+
+	Order findById(int id);
 }
