@@ -7,10 +7,10 @@ import java.util.Date;
 @Data
 public class PayInfo {
     private String to;
-    private int amount;
+    private float amount;
     private Date date;
 
-    public PayInfo(int amount, String to, Date date){
+    public PayInfo(float amount, String to, Date date){
         this.to = to;
         this.amount = amount;
         this.date = date;

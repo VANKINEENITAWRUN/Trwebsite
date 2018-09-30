@@ -45,12 +45,17 @@ public class Payments {
 	private String transactionId;
 
 	@Column(name ="amount")
-	@Range(min = 0l, message = " provide your loading price")
+	@Range(min = 0l, message = " provide your price")
 	private float amount;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "packer_id", nullable = false)
 	private Packer packer;
+
+	public PayInfo toPayInfo(){
+
+		return new PayInfo( this.amount, "Amount Deposited from Paypal", this.dateofpayment);
+	}
 
 
 }

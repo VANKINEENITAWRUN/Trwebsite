@@ -74,7 +74,7 @@ public class OrderController {
 		};
 	}
 	@RequestMapping(value="/order/{id}", method = RequestMethod.GET)
-	public ModelAndView completeDetails(@PathVariable Long id){
+	public ModelAndView completeDetails(@PathVariable int id){
 		return getModelAndView( id,"user", orderRepository );
 	}
 

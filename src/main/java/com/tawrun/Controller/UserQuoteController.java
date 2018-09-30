@@ -5,7 +5,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import com.tawrun.Repository.ImageRepository;
 import com.tawrun.Repository.OrderRepository;
 import com.tawrun.Repository.QuoteRepository;
 import com.tawrun.Repository.ReviewRepository;
+import com.tawrun.Repository.TransactionRepository;
 import com.tawrun.Services.PackerServices;
 import com.tawrun.Utils.ResourceNotFoundException;
 import com.tawrun.model.Image;
@@ -21,6 +24,7 @@ import com.tawrun.model.Order;
 import com.tawrun.model.Packer;
 import com.tawrun.model.Quote;
 import com.tawrun.model.Reviews;
+import com.tawrun.model.Transaction;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +59,14 @@ public class UserQuoteController {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
+	@Autowired
+	private TransactionRepository transactionRepository;
 
 	@Autowired
 	private ImageRepository imageRepository;
 
 	@RequestMapping(value="/quotes/{id}", method = RequestMethod.GET)
-	public ModelAndView getQuotes(@PathVariable Long id){
+	public ModelAndView getQuotes(@PathVariable int id){
 
 		ModelAndView modelAndView = new ModelAndView();
 		ArrayList<Quote> quotes= new ArrayList<>(quoteRepository.findByOrderId( id ));
@@ -77,10 +83,9 @@ public class UserQuoteController {
 		System.out.println(request);
 		Map<String, Object> response = new HashMap<String, Object>();
 		int packer_id=Integer.parseInt( request.get( "packerid" ) ) ;
-		Long order_id=Long.parseLong( request.get( "orderid" ) ) ;
+		int order_id=Integer.parseInt( request.get( "orderid" ) ) ;
 
-		Order order= orderRepository.findById( order_id )
-				.orElseThrow(() -> new ResourceNotFoundException( "Order", "id", order_id));
+		Order order= orderRepository.findById( order_id );
 		System.out.println("b_order"+ order.getPacker() );
 
 		if(order.getPacker()==null){
@@ -90,6 +95,18 @@ public class UserQuoteController {
 
 
 			Order order1= orderRepository.save( order );
+			List<Quote> quotes =quoteRepository.findByOrderId( order1.getId() );
+			for(Quote q:quotes){
+
+				if(q.getPacker().getId()!=packer_id){
+					Transaction transaction=new Transaction()	;
+					transaction.setAmount( 150 );
+					transaction.setQuote( q );
+					transaction.setDateofpayment( Calendar.getInstance().getTime()  );
+					transactionRepository.save(transaction  );}
+
+			}
+
 
 			response.put( "sucess","Your Details will be Shared with Packer");
 

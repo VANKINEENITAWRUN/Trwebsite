@@ -18,15 +18,15 @@ public class PackerHomeController {
 	private OrderRepository orderRepository;
 
 	@RequestMapping(value="/orders/{id}", method = RequestMethod.GET)
-	public ModelAndView completeDetails(@PathVariable Long id){
+	public ModelAndView completeDetails(@PathVariable int id){
 		return getModelAndView( id,"packer", orderRepository );
 	}
 
 	static ModelAndView getModelAndView(
-			@PathVariable Long id, String flag,
+			@PathVariable int id, String flag,
 			OrderRepository orderRepository) {
 		ModelAndView view = new ModelAndView();
-		Order order= orderRepository.findById( id ).get();
+		Order order= orderRepository.findById( id );
 		view.addObject( "url",flag );
 		view.addObject("order", order);
 		view.setViewName("complete_loadDetails");

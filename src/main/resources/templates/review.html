@@ -75,7 +75,7 @@
 
             <!--<button >Accept Quote </button>-->
 
-            <form th:action="@{'/user/download/'+${packer.getId()}}">
+            <form th:action="@{'/user/download/'+${packer.getImage().getId()}}">
                 <input type="submit" value="Check Certificate" />
             </form>
 
