@@ -10,6 +10,9 @@ public class PayInfo {
     private int amount;
     private Date date;
 
+	public PayInfo(){
+	}
+
     public PayInfo(int amount, String to, Date date){
         this.to = to;
         this.amount = amount;
