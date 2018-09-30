@@ -9,7 +9,7 @@ public class Transaction {
 
     // TODO define it
     public PayInfo toPayInfo(){
-        PayInfo p;
+        PayInfo p = new PayInfo();
 
         // Add logic
 
