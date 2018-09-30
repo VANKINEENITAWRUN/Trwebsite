@@ -3,12 +3,24 @@ package com.tawrun.Services;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import com.tawrun.Repository.PaymentRepository;
+import com.tawrun.model.Packer;
+import com.tawrun.model.Payments;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /*
@@ -21,6 +33,7 @@ sandbox account: sushsilsharma.ss451-facilitator@gmail.com
 public class PayPalClient {
     String clientId = "AWkwWxlmZXEEUJ8wvF5wYv71w9dr94RnM4gRPNqcqyc_8paJsov_oGcHDn1KpPd0gKsYulGHYHJZdsms";
     String clientSecret = "EEDSEjTkEe7pYE74R_7AZI-njS3bpo3P8IhP36elsFN5p26xTk4g1FEVos_3ZwZYee6drp0IOy1OpPuG";
+
 
     public Map<String, Object> createPayment(String sum){
         Map<String, Object> response = new HashMap<String, Object>();
@@ -69,27 +82,41 @@ public class PayPalClient {
         return response;
     }
 
-    public Map<String, Object> completePayment(HttpServletRequest req){
-        Map<String, Object> response = new HashMap<String, Object>();
+    public Payments completePayment(HttpServletRequest req){
+
         Payment payment = new Payment();
         payment.setId(req.getParameter("paymentId"));
 
         PaymentExecution paymentExecution = new PaymentExecution();
         paymentExecution.setPayerId(req.getParameter("PayerID"));
 
-        System.out.println("Payment ID is: "+req.getParameter("paymentId"));
+        System.out.println("Payments ID is: "+req.getParameter("paymentId"));
         System.out.println("Payer ID is: "+req.getParameter("PayerID"));
-
+		Payments payments=null;
         try {
             APIContext context = new APIContext(clientId, clientSecret, "sandbox");
             Payment createdPayment = payment.execute(context, paymentExecution);
             if(createdPayment!=null){
-                response.put("status", "success");
-//                response.put("payment", createdPayment);
+
+
+                String amoun=createdPayment.getTransactions().get( 0 ).getAmount().getTotal();
+				float f = Float.valueOf(amoun.trim()).floatValue();
+
+                payments=new Payments();
+                payments.setAmount( f );
+                System.out.println( createdPayment.getUpdateTime() );
+
+				payments.setDateofpayment(Calendar.getInstance().getTime()  );
+				payments.setTransactionId(  createdPayment.getId());
+
+
+
+
             }
         } catch (PayPalRESTException e) {
             System.err.println(e.getDetails());
         }
-        return response;
+
+		return payments;
     }
 }

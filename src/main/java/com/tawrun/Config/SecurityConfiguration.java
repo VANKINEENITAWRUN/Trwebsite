@@ -54,7 +54,6 @@ public class SecurityConfiguration{
 
 			http.antMatcher( "/user/**" )
 				.authorizeRequests()
-
 				.antMatchers("/user/login").permitAll()
 				.antMatchers("/user/registration").permitAll()
 				.antMatchers("/user/**").hasAuthority("ADMIN").anyRequest()
@@ -114,7 +113,6 @@ public class SecurityConfiguration{
 
 			http.antMatcher( "/packer/**" )
 					.authorizeRequests()
-
 					.antMatchers("/packer/login").permitAll()
 					.antMatchers("/packer/registration").permitAll()
 					.antMatchers("/packer/**").hasAuthority("PACKER").anyRequest()

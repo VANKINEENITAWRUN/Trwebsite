@@ -207,7 +207,7 @@
 
         console.log('Making first post call');
 
-        $.post(window.location.origin+'/paypal/make/payment?sum='+sum,
+        $.post(window.location.origin+'/packer/paypal/make/payment?sum='+sum,
             function(response){
                 console.log(response);
 
@@ -245,7 +245,7 @@
         console.log('Making second and final post call');
 
         // make the final call
-        $.post(window.location.origin+'/paypal/complete/payment?paymentId=' + paymentId + '&PayerID=' + PayerID ,
+        $.post(window.location.origin+'/packer/paypal/complete/payment?paymentId=' + paymentId + '&PayerID=' + PayerID ,
             function(resp){
                 console.log(resp);
             });
