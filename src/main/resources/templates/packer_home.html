@@ -92,7 +92,11 @@
 
                     </div>
                     <div th:unless="${order.getPacker()==null}">
-                        <h5 th:if="${order.getPacker().getId()==packer.getId()}"  th:utext="'<b>Order Status  :  Accepted </b>'"> ></h5>
+                        <div th:if="${order.getPacker().getId()==packer.getId()}">
+                            <button th:onclick="'javascript:showUserDetails(\''+${order.getCustomer().getUsername()}+'\',\''+${order.getCustomer().getEmail()} + '\')'">Show Contact Details</button>
+                            <h5 th:utext="'<b>Order Status  :  Accepted </b>'">>
+                            </h5>
+                        </div>
                         <h5 th:unless="${order.getPacker().getId()==packer.getId()}" th:utext="'<b>Order Status  :  NOt Accepted </b>'" ></h5>
 
                     </div>
@@ -215,6 +219,12 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
+
+
+    // Add click method for show contact details
+    function showUserDetails(username, email){
+        alert(username+" - "+email);
+    }
 
     // Add payment listener. Make a payment on click
     $("#paymentButton").click(function(){
