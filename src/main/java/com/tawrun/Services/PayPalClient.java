@@ -57,8 +57,8 @@ public class PayPalClient {
 
         // TODO Currently failure and success redirect URL's are the same.
         // TODO U wont the diff if its passed or not. Make them separate
-        redirectUrls.setCancelUrl("http://localhost:8080/packer/home");
-        redirectUrls.setReturnUrl("http://localhost:8080/packer/home");
+        redirectUrls.setCancelUrl("https://tr-spring.herokuapp.com/packer/home");
+        redirectUrls.setReturnUrl("https://tr-spring.herokuapp.com/packer/home");
         payment.setRedirectUrls(redirectUrls);
         Payment createdPayment;
         try {
