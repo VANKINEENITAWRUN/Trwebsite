@@ -18,8 +18,8 @@ public interface QuoteRepository  extends JpaRepository<Quote, Long> {
 	boolean alreadyQuoted( int order_id, int packer_id);
 
 
-
+	@Query(value = "select * from Quote e where e.order_id=?1",nativeQuery = true)
 	List<Quote> findByOrderId(int id);
 
-	List<Quote>findByPackerId(int id);
+//	List<Quote>findByPackerId(int id);
 }

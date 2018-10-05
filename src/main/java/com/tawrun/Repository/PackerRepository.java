@@ -10,6 +10,6 @@ public interface PackerRepository extends JpaRepository<Packer, Long> {
 
 	@Query(value="select * from packer p where p.email=?1",nativeQuery = true)
 	Packer findByEmail(String email);
-	@Query(value = "select * from packer p where p.packer_id=?1",nativeQuery = true)
+//	@Query(value = "select * from packer p where p.packer_id=?1",nativeQuery = true)
 	Packer findById(int id);
 }

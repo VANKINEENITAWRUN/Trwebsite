@@ -9,6 +9,7 @@ import com.tawrun.Repository.OrderRepository;
 import com.tawrun.Services.CustomerService;
 import com.tawrun.model.Customer;
 import com.tawrun.model.Order;
+import com.tawrun.model.Reviews;
 import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -73,6 +74,7 @@ public class LoginController {
 		ArrayList<Order> orders = orderRepository.findByCustomerId(customer.getId());
 		System.out.print( orders.size()+"");
 		modelAndView.addObject( "flag","order" );
+		modelAndView.addObject( "review",new Reviews() );
 		modelAndView.addObject( "orders",orders );
 		modelAndView.addObject("customerName", "Welcome " + customer.getName()  + " (" + customer.getEmail() + ")");
 		modelAndView.setViewName("home");

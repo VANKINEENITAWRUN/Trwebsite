@@ -64,13 +64,13 @@
     </div>
 
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <!--<div class="form-group col-md-6">-->
 
 
-            <h5  th:utext="'<b>UnLoading Price :    </b>'"></h5>
+            <!--<h5  th:utext="'<b>UnLoading Price :    </b>'"></h5>-->
 
 
-        </div>
+        <!--</div>-->
         <div class="form-group col-md-6">
 
             <!--<button >Accept Quote </button>-->
@@ -81,6 +81,40 @@
 
 
         </div>
+
+
+
+    </div>
+
+    <div align="center">
+        <tr th:each="review: ${reviews}">
+
+            <div class="card" style="max-width: 60%">
+
+
+                <div class="card-body"  >
+
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+
+
+                            <h5 th:utext="'<b>Rating out of 5 :   </b>'+${review.getRating()}"></h5>
+
+                        </div>
+                        <div class="form-group col-md-6">
+
+                            <h5  th:utext="'<b>Review :    </b>'+${review.getReview()}"></h5>
+
+                        </div>
+
+                    </div>
+
+                    <p class="card-text"></p>
+                </div>
+            </div>
+
+        </tr>
 
     </div>
 </div>

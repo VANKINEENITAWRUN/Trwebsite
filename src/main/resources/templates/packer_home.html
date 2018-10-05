@@ -44,7 +44,7 @@
                 <li class="menu-active"><a href="#about">About Us</a></li>
                 <!-- <li><a href="#services">Services</a></li> -->
                 <!-- <li><a href="#portfolio">Portfolio</a></li> -->
-                <li class="menu-active"><a th:href="@{/packer/pastload}">PostLoad</a></li>
+                <li class="menu-active"><a th:href="@{/packer/profile}">Profile</a></li>
                 <!-- <li class="menu-has-children"><a href="">Drop Down</a> -->
                 <!-- <ul>
                   <li><a href="#">Drop Down 1</a></li>
@@ -134,9 +134,10 @@
         </tr>
     </div>
     <div style="width: 50%; float: right;" class="form-group col-md-8">
+        <b>View Statement</b>
         <tr th:each="info: ${payinfo}">
 
-            <b>View Statement</b>
+
 
             <div class="card" style="margin:10%">
                 <div class="card-body">

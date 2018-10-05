@@ -88,7 +88,7 @@ public class PackerLoginController {
 
 			packerServices.savePacker(packer,file);
 			modelAndView.addObject( "image",new Image() );
-			modelAndView.addObject("successMessage", "Customer has been registered successfully");
+			modelAndView.addObject("successMessage", "You been registered successfully");
 			modelAndView.addObject("customer", new Packer());
 			modelAndView.setViewName("packer_registration");
 

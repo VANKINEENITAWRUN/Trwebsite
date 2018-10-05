@@ -14,6 +14,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 	@Query(value = "select * from orders o where o.user_id=?1 ",nativeQuery = true)
 	ArrayList<Order> findByCustomerId(int customerId);
-
+	@Query(value = "select * from orders o where o.order_id=?1 ",nativeQuery = true)
 	Order findById(int id);
 }

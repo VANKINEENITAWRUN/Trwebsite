@@ -23,6 +23,7 @@ import com.tawrun.model.Image;
 import com.tawrun.model.Order;
 import com.tawrun.model.Packer;
 import com.tawrun.model.Quote;
+import com.tawrun.model.ReviewInfo;
 import com.tawrun.model.Reviews;
 import com.tawrun.model.Transaction;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
